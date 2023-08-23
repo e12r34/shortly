@@ -5,11 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {
-      // colors: {
-      //   'sign-up-normal': '#2cd5bf',
-      //   'sign-up-hover': '#0d9488',
-      //   'sign-up-clicked': '#0e776e'
-      // },
+      backgroundImage: {
+        'shorten-desktop': "url('/assets/images/bg-shorten-desktop.svg')",
+      }
     },
   },
   plugins: [],
