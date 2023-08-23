@@ -31,7 +31,7 @@
           </div>
           <div class="lg:col-span-1">
             <!-- Button -->
-            <button class="bg-teal-400 hover:bg-teal-600 active:bg-teal-800 text-white font-bold p-5 rounded-lg w-full">
+            <button class="bg-teal-400 hover:bg-teal-600 active:bg-teal-800 text-white font-bold p-5 rounded-lg w-full" (click)="doShortenLink()">
               <p class="font-sans text-xl">Shorten it!</p>
             </button>
           </div>
@@ -40,7 +40,7 @@
         <!-- Single column layout for small screens -->
         <div class="lg:hidden mt-4">
           <input type="text" class="p-5 border rounded-lg w-full mb-2" placeholder="Enter your link here" [(ngModel)]="inputUrl" >
-          <button class="bg-teal-400 hover:bg-teal-600 active:bg-teal-800 text-white font-bold p-5 rounded-lg w-full">
+          <button class="bg-teal-400 hover:bg-teal-600 active:bg-teal-800 text-white font-bold p-5 rounded-lg w-full" (click)="doShortenLink()">
             <p class="font-sans text-xl">Shorten it!</p>
           </button>
         </div>
