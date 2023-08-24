@@ -5,7 +5,8 @@ import { MainRoutingModule } from './main-routing.modules';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ContentComponent } from './content/content.component';
 import { FormsModule } from '@angular/forms';
-import { ModalLoadingComponent } from './content/modal-loading/modal-loading.component';
+import { ModalLoadingComponent } from './content/modals/modal-loading/modal-loading.component';
+import { ModalDialogSuccessShortenComponent } from './content/modals/modal-dialog-success-shorten/modal-dialog-success-shorten.component';
 
 
 
@@ -15,7 +16,8 @@ import { ModalLoadingComponent } from './content/modal-loading/modal-loading.com
     MainComponent,
     NavbarComponent,
     ContentComponent,
-    ModalLoadingComponent
+    ModalLoadingComponent,
+    ModalDialogSuccessShortenComponent
   ],
   imports: [
     CommonModule,

@@ -13,8 +13,10 @@ export class ContentComponent implements OnInit {
   buttonCopyText="Copy!"
   dataCurrentShortenObject:any=[]
   inputUrl:string=""
-
+  isSuccesShorten:boolean=false
   loading_full:boolean=true
+  newShortenLink:string=""
+
 
   constructor(private apiService: ApiService){
 
@@ -41,13 +43,12 @@ export class ContentComponent implements OnInit {
   }
 
   doShortenLink(){
+    this.loading_full=true
     this.apiService.get(PATH.SHORTEN_FULL_PATH(this.inputUrl)).subscribe(
       (res:any)=>{
-        alert("Succses")
-
-        // var dataShortenInStorage:any=[]
-
-
+        this.loading_full=false
+        this.isSuccesShorten=true
+        this.newShortenLink=res['result']['short_link']
         var dataShortenInStorageIsNotNull:boolean
         this.dataCurrentShortenObject.length>0 ? dataShortenInStorageIsNotNull=true: dataShortenInStorageIsNotNull=false
 
@@ -56,14 +57,10 @@ export class ContentComponent implements OnInit {
           original_link : res['result']['original_link'],
           short_link : res['result']['short_link']
         }
-        var dataShortens:any
+        var dataShortens:any=[]
 
         if(dataShortenInStorageIsNotNull){
-          console.log(this.dataCurrentShortenObject)
-          console.log(dataShortens)
           dataShortens=[...this.dataCurrentShortenObject]
-          console.log(this.dataCurrentShortenObject)
-          console.log(dataShortens)
           localStorage.removeItem("shortenData")
         }
 
@@ -71,10 +68,10 @@ export class ContentComponent implements OnInit {
         localStorage.setItem("shortenData",JSON.stringify(dataShortens))
 
         this.dataCurrentShortenObject=dataShortens
+        this.inputUrl=""
+
       },
       (error)=>{
-        console.log(error)
-        alert("error")
       }
     )
   }

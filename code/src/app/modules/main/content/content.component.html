@@ -28,7 +28,7 @@
         <div class="sm:grid lg:grid-cols-4 lg:gap-x-4">
           <div class="lg:col-span-3">
             <!-- Input field takes 75% of grid -->
-            <input type="text" class="p-5 border rounded-lg w-full" placeholder="Enter your link here" [(ngModel)]="inputUrl" >
+            <input type="text" class="p-5 border rounded-lg w-full hover:border-blue-500 focus:border-blue-500 active:border-blue-500" placeholder="Enter your link here" [(ngModel)]="inputUrl" >
           </div>
           <div class="lg:col-span-1">
             <!-- Button -->
@@ -37,15 +37,6 @@
             </button>
           </div>
         </div>
-
-        <!-- Single column layout for small screens -->
-        <!-- <div class="lg:hidden mt-4">
-          <input type="text" class="p-5 border rounded-lg w-full mb-2" placeholder="Enter your link here" [(ngModel)]="inputUrl" >
-          <button class="bg-teal-400 hover:bg-teal-600 active:bg-teal-800 text-white font-bold p-5 rounded-lg w-full" (click)="doShortenLink()">
-            <p class="font-sans text-xl">Shorten it!</p>
-          </button>
-        </div> -->
-
       </div>
     </div>
   </div>
@@ -56,12 +47,13 @@
     <div class="bg-gray-100 mb-40 sm:mb-24 grid">
     <!-- for padding -->
     </div>
-
-    <div *ngFor="let data of dataCurrentShortenObject" id="current-box" class="bg-white rounded-lg shadow-md p-4 lg:p-12 text-center custom-width-lg sm:custom-width-sm mx-auto mt-4">
-
+    <div class="text-left custom-width-lg sm:custom-width-sm mx-auto mt-4" *ngIf="dataCurrentShortenObject.length>0">
+      <p class="font-sans font-semibold text-stone-400">Your Link</p>
+    </div>
+    <div *ngFor="let data of dataCurrentShortenObject.reverse()" id="current-box" class="bg-white rounded-lg shadow-md p-2 lg:p-6 text-center custom-width-lg sm:custom-width-sm mx-auto mt-4">
       <div class="sm:grid lg:grid-cols-7 md:grid-cols-6 lg:gap-x-4">
         <div class="lg:col-span-2">
-          <p class="font-sans text-2xl mt-4 w-full"> {{data.original_link}} </p>
+          <p class="font-sans text-lg mt-2 w-full">{{data.original_link}}</p>
         </div>
 
         <div class="lg:col-span-2 hidden lg:block md:block md:col-span-2">
@@ -69,19 +61,18 @@
         </div>
 
         <div class="lg:col-span-2">
-          <p class="font-sans text-2xl mt-4 w-full"> {{data.short_link}} </p>
+          <p class="font-sans text-lg text-teal-400 mt-2 w-full">{{data.short_link}}</p>
         </div>
 
         <div class="col-span-1">
           <!-- Button -->
-          <button class="bg-teal-400 hover:bg-teal-600 active:bg-teal-800 text-white font-bold p-3 sm:p-5 rounded-lg w-full" (click)="copyShortenLink(data)" >
-            <p class="font-sans text-xl">{{ data.isCopied ? 'Copied!' : 'Copy!' }}</p>
+          <button class="bg-teal-400 hover:bg-teal-600 active:bg-teal-800 text-white font-bold p-2 sm:p-3 rounded-lg w-full" (click)="copyShortenLink(data)">
+            <p class="font-sans text-sm">{{ data.isCopied ? 'Copied!' : 'Copy!' }}</p>
           </button>
         </div>
       </div>
-
-
     </div>
+
 
     <div class="pt-6">
       <div class="mx-auto mt-36 max-w-2xl sm:px-10 lg:grid lg:max-w-7xl lg:grid-cols-1 lg:gap-x-12 lg:px-8">
@@ -146,4 +137,7 @@
   </div> -->
 </div>
 
-<app-modal-loading [isLoading]="loading_full"></app-modal-loading>
+<app-modal-loading [isLoading]="loading_full">
+</app-modal-loading>
+<app-modal-dialog-success-shorten [shortenLink]="newShortenLink" [isSuccesShorten]="isSuccesShorten">
+</app-modal-dialog-success-shorten>
