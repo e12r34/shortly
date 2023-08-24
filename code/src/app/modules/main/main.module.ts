@@ -5,6 +5,8 @@ import { MainRoutingModule } from './main-routing.modules';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ContentComponent } from './content/content.component';
 import { FormsModule } from '@angular/forms';
+import { ModalLoadingComponent } from './content/modal-loading/modal-loading.component';
+
 
 
 
@@ -12,12 +14,13 @@ import { FormsModule } from '@angular/forms';
   declarations: [
     MainComponent,
     NavbarComponent,
-    ContentComponent
+    ContentComponent,
+    ModalLoadingComponent
   ],
   imports: [
     CommonModule,
     MainRoutingModule,
-    FormsModule
+    FormsModule,
 
   ]
 })

@@ -1,5 +1,5 @@
 import { ApiService } from '../../../services/api/api.service';
-import { Component } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { PATH } from '../../../services/api/'
 
 @Component({
@@ -7,11 +7,37 @@ import { PATH } from '../../../services/api/'
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.css']
 })
-export class ContentComponent {
+export class ContentComponent implements OnInit {
 
+
+  buttonCopyText="Copy!"
+  dataCurrentShortenObject:any=[]
   inputUrl:string=""
+
+  loading_full:boolean=true
+
   constructor(private apiService: ApiService){
 
+  }
+
+  copyShortenLink(data:any){
+
+    data.isCopied=true
+
+    const name=data.short_link
+    var copyElement = document.createElement("textarea");
+    copyElement.style.position = 'fixed';
+    copyElement.style.opacity = '0';
+    copyElement.textContent = decodeURI(name);
+    var body = document.getElementsByTagName('body')[0];
+    body.appendChild(copyElement);
+    copyElement.select();
+    document.execCommand('copy');
+    body.removeChild(copyElement);
+
+    setTimeout(() => {
+      data.isCopied=false
+    }, 2000);
   }
 
   doShortenLink(){
@@ -19,35 +45,46 @@ export class ContentComponent {
       (res:any)=>{
         alert("Succses")
 
-        var dataShortenInStorage:any=[]
-        dataShortenInStorage = localStorage.getItem("shortenData")
+        // var dataShortenInStorage:any=[]
+
 
         var dataShortenInStorageIsNotNull:boolean
-        dataShortenInStorage!=null? dataShortenInStorageIsNotNull=true: dataShortenInStorageIsNotNull=false
+        this.dataCurrentShortenObject.length>0 ? dataShortenInStorageIsNotNull=true: dataShortenInStorageIsNotNull=false
 
-        var dataShorten:any={}
-        dataShorten['code'] =res['result']['code']
-        dataShorten['original_link'] = res['result']['original_link']
-        dataShorten['short_link'] = res['result']['short_link']
-
-        console.log(dataShortenInStorage)
-        console.log(dataShortenInStorageIsNotNull)
-        var dataShortens:any=[]
+        var dataShorten = {
+          code :res['result']['code'],
+          original_link : res['result']['original_link'],
+          short_link : res['result']['short_link']
+        }
+        var dataShortens:any
 
         if(dataShortenInStorageIsNotNull){
-          dataShortens=JSON.parse(dataShortenInStorage)
+          console.log(this.dataCurrentShortenObject)
+          console.log(dataShortens)
+          dataShortens=[...this.dataCurrentShortenObject]
+          console.log(this.dataCurrentShortenObject)
+          console.log(dataShortens)
           localStorage.removeItem("shortenData")
         }
 
         dataShortens.push(dataShorten)
         localStorage.setItem("shortenData",JSON.stringify(dataShortens))
-        console.log("done")
 
+        this.dataCurrentShortenObject=dataShortens
       },
       (error)=>{
         console.log(error)
         alert("error")
       }
     )
+  }
+
+  ngOnInit() {
+    var dataCurrentShortenString:any = localStorage.getItem("shortenData")
+    dataCurrentShortenString!=null ? this.dataCurrentShortenObject=JSON.parse(dataCurrentShortenString):null
+    setTimeout(() => {
+      this.loading_full=false
+    }, 1000);
+
   }
 }

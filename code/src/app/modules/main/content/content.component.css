@@ -13,3 +13,27 @@
   width: 90vw; /* 75% of the viewport width */
   left: 20%;
 }
+
+
+.custom-width-shorten {
+  width: 75vw; /* 75% of the viewport width */
+  left: 50%;
+}
+
+.custom-width-sm {
+  width: 90vw; /* 75% of the viewport width */
+  left: 25%;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-animation {
+  animation: spin 1s linear infinite;
+}
