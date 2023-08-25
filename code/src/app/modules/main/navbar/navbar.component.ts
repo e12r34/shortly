@@ -7,24 +7,27 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   styleUrls: ['./navbar.component.css'],
   animations: [
     trigger('fadeInOut', [
-      state('fadeIn', style({ opacity: 1, transform: 'translateY(0)' })),
-      state('fadeOut', style({ opacity: 0, transform: 'translateY(-10px)' })),
+      state('void', style({ opacity: 0 })),
+      state('fadeIn', style({ opacity: 1 })),
+      state('fadeOut', style({ opacity: 0 })),
+      transition('void => fadeIn', animate('0.2s ease-in-out')),
       transition('fadeIn => fadeOut', animate('0.2s ease-in-out')),
-      transition('fadeOut => fadeIn', animate('0.2s ease-in-out')),
+      transition('fadeOut => void', animate('0.2s ease-in-out')),
     ]),
   ],
 })
 
 export class NavbarComponent {
 
-  showContent=false
+  showContentAnimation=false
 
   constructor(){
 
   }
 
   toggleProduct(){
-    this.showContent = !this.showContent;
+    this.showContentAnimation = !this.showContentAnimation;
+
   }
 
 }

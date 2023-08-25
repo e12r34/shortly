@@ -42,8 +42,13 @@ export class ContentComponent implements OnInit {
     }, 2000);
   }
 
+  //when shorten link is clicked
   doShortenLink(){
     this.loading_full=true
+    setTimeout(() => {
+      this.loading_full=false
+    }, 5000);
+
     this.apiService.get(PATH.SHORTEN_FULL_PATH(this.inputUrl)).subscribe(
       (res:any)=>{
         this.loading_full=false
@@ -76,12 +81,22 @@ export class ContentComponent implements OnInit {
     )
   }
 
+  //get shorten data from local storage
   ngOnInit() {
     var dataCurrentShortenString:any = localStorage.getItem("shortenData")
     dataCurrentShortenString!=null ? this.dataCurrentShortenObject=JSON.parse(dataCurrentShortenString):null
     setTimeout(() => {
       this.loading_full=false
     }, 1000);
-
+    this.regexTesting()
   }
+
+  regexTesting(){
+    const urlRegexPattern = /^(https?:\/\/(www\.)?)?([a-zA-Z]{2,}\.)+[a-zA-Z0-9]{2,}(\/[a-zA-Z0-9]+)*$/
+    // console.log(urlRegexPattern.test("google.com"))
+    // console.log(urlRegexPattern.test("localhost"))
+    // console.log(urlRegexPattern.test("http://subkhan.com"))
+  }
+
+
 }
