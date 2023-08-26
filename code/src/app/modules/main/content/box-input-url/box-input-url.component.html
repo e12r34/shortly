@@ -4,9 +4,10 @@
 
       <!-- Grid layout for large screens -->
       <div class="sm:grid lg:grid-cols-4 lg:gap-x-4">
-        <div class="lg:col-span-3">
+        <div class="lg:col-span-3 text-left">
           <!-- Input field takes 75% of grid -->
-          <input type="text" class="p-5 border rounded-lg w-full hover:border-blue-500 focus:border-blue-500 active:border-blue-500" placeholder="Enter your link here" [(ngModel)]="inputUrl" >
+          <input type="text" class="p-5 rounded-lg w-full hover:border-blue-500 focus:border-blue-500 active:border-blue-500 {{ isRegexValid ? (isSuccesShorten ? 'border-4 border-green-500' : 'border') : 'border-4 border-red-500' }}" placeholder="Enter your link here" [(ngModel)]="inputUrl">
+          <p class="text-rose-500" *ngIf="!isRegexValid" >Please add a links</p>
         </div>
         <div class="lg:col-span-1">
           <!-- Button -->

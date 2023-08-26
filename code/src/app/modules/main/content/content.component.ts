@@ -45,15 +45,9 @@ export class ContentComponent implements OnInit {
     setTimeout(() => {
       this.loading_full=false
     }, 1000);
-    this.regexTesting()
+
   }
 
-  regexTesting(){
-    const urlRegexPattern = /^(https?:\/\/(www\.)?)?([a-zA-Z]{2,}\.)+[a-zA-Z0-9]{2,}(\/[a-zA-Z0-9]+)*$/
-    // console.log(urlRegexPattern.test("google.com"))
-    // console.log(urlRegexPattern.test("localhost"))
-    // console.log(urlRegexPattern.test("http://subkhan.com"))
-  }
 
 
 }
