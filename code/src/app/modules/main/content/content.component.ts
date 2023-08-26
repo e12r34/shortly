@@ -1,6 +1,4 @@
-import { ApiService } from '../../../services/api/api.service';
-import { Component, OnInit, Output } from '@angular/core';
-import { PATH } from '../../../services/api/'
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-content',
@@ -12,74 +10,33 @@ export class ContentComponent implements OnInit {
 
   buttonCopyText="Copy!"
   dataCurrentShortenObject:any=[]
-  inputUrl:string=""
+  // inputUrl:string=""
   isSuccesShorten:boolean=false
   loading_full:boolean=true
   newShortenLink:string=""
 
 
-  constructor(private apiService: ApiService){
-
+  constructor(){
   }
 
-  copyShortenLink(data:any){
+  receiveLoading($event:boolean){
+    this.loading_full=$event
+  }
 
-    data.isCopied=true
+  receiveIsSuccessShorten($event:boolean){
+    this.isSuccesShorten=$event
+  }
 
-    const name=data.short_link
-    var copyElement = document.createElement("textarea");
-    copyElement.style.position = 'fixed';
-    copyElement.style.opacity = '0';
-    copyElement.textContent = decodeURI(name);
-    var body = document.getElementsByTagName('body')[0];
-    body.appendChild(copyElement);
-    copyElement.select();
-    document.execCommand('copy');
-    body.removeChild(copyElement);
+  receiveNewShortenLink($event:string){
+    this.newShortenLink=$event
+  }
 
-    setTimeout(() => {
-      data.isCopied=false
-    }, 2000);
+  receiveDataCurrentShortenObject($event:object){
+    this.dataCurrentShortenObject=$event
   }
 
   //when shorten link is clicked
-  doShortenLink(){
-    this.loading_full=true
-    setTimeout(() => {
-      this.loading_full=false
-    }, 5000);
 
-    this.apiService.get(PATH.SHORTEN_FULL_PATH(this.inputUrl)).subscribe(
-      (res:any)=>{
-        this.loading_full=false
-        this.isSuccesShorten=true
-        this.newShortenLink=res['result']['short_link']
-        var dataShortenInStorageIsNotNull:boolean
-        this.dataCurrentShortenObject.length>0 ? dataShortenInStorageIsNotNull=true: dataShortenInStorageIsNotNull=false
-
-        var dataShorten = {
-          code :res['result']['code'],
-          original_link : res['result']['original_link'],
-          short_link : res['result']['short_link']
-        }
-        var dataShortens:any=[]
-
-        if(dataShortenInStorageIsNotNull){
-          dataShortens=[...this.dataCurrentShortenObject]
-          localStorage.removeItem("shortenData")
-        }
-
-        dataShortens.push(dataShorten)
-        localStorage.setItem("shortenData",JSON.stringify(dataShortens))
-
-        this.dataCurrentShortenObject=dataShortens
-        this.inputUrl=""
-
-      },
-      (error)=>{
-      }
-    )
-  }
 
   //get shorten data from local storage
   ngOnInit() {

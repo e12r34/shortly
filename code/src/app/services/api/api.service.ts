@@ -17,18 +17,6 @@ export class ApiService {
     return this.http.get<T>(`${this.apiUrl}${path}`, { params, headers: this.getHeaders() });
   }
 
-  post<T>(path: string, body: any): Observable<T> {
-    return this.http.post<T>(`${this.apiUrl}${path}`, body, { headers: this.getHeaders() });
-  }
-
-  put<T>(path: string, body: any): Observable<T> {
-    return this.http.put<T>(`${this.apiUrl}${path}`, body, { headers: this.getHeaders() });
-  }
-
-  delete<T>(path: string): Observable<T> {
-    return this.http.delete<T>(`${this.apiUrl}${path}`, { headers: this.getHeaders() });
-  }
-
   private getHeaders(): HttpHeaders {
     return new HttpHeaders().set('Content-Type', 'application/json');
   }

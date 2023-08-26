@@ -1,190 +1,39 @@
-<div id="content" *ngIf="!loading_full">
+<div id="content">
   <!-- this is section 1 -->
-  <div id="section-1" class="bg-white">
-    <div class="pt-6">
-      <div class="mx-auto mb-40 md:mb-32 lg:mb-24 mt-6 max-w-2xl sm:px-10 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-12 lg:px-8">
-        <div class="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:rounded-lg lg:justify-end sm:order-last">
-          <img src="assets/images/illustration-working.svg" alt="Working image" class="w-full h-full transform-lg">
-        </div>
-        <div class="aspect-h-4 aspect-w-3 rounded-lg lg:block sm:block">
-          <div class="text-center sm:text-left">
-            <h1 class="text-4xl mx-8 sm:mx-0 font-bold tracking-tight text-gray-900 sm:text-7xl font-sans">More than just shorten links</h1>
-            <p class="mt-6 mx-4 sm:mx-0 text-2xl leading-8 text-gray-600">Build your brand's recognition and get detailed insights on how your links are performing</p>
-            <div class="mt-6 flex justify-center lg:justify-start">
-              <button class="bg-teal-400 hover:bg-teal-600 active:bg-teal-800 text-white font-bold py-5 px-12 rounded-full">
-                <p class="font-sans text-xl">Get Started</p>
-              </button>
+  <app-section-one></app-section-one>
 
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- this is box to input link to be shorten -->
-  <div class="relative">
-    <div class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
-      <div id="box-shorten" class="bg-shorten-mobile sm:bg-shorten-desktop bg-purple-800 rounded-lg shadow-md p-12 text-center custom-width-lg sm:custom-width-sm">
-
-        <!-- Grid layout for large screens -->
-        <div class="sm:grid lg:grid-cols-4 lg:gap-x-4">
-          <div class="lg:col-span-3">
-            <!-- Input field takes 75% of grid -->
-            <input type="text" class="p-5 border rounded-lg w-full hover:border-blue-500 focus:border-blue-500 active:border-blue-500" placeholder="Enter your link here" [(ngModel)]="inputUrl" >
-          </div>
-          <div class="lg:col-span-1">
-            <!-- Button -->
-            <button class="bg-teal-400 hover:bg-teal-600 active:bg-teal-800 text-white font-bold p-5 rounded-lg w-full" (click)="doShortenLink()">
-              <p class="font-sans text-xl">Shorten it!</p>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <app-box-input-url
+  [dataCurrentShortenObject]="dataCurrentShortenObject"
+  (emitIsSuccesShorten)="receiveIsSuccessShorten($event)"
+  (emitLoading)="receiveLoading($event)"
+  (emitNewShortenLink)="receiveNewShortenLink($event)"
+  (emitDataCurrentShortenObject)="receiveDataCurrentShortenObject($event)"
+  ></app-box-input-url>
 
 
   <!-- this is section 2 -->
-  <div id="section-2" class="bg-gray-100 justify-center items-center">
-    <div class="bg-gray-100 mb-40 sm:mb-24 grid">
-      <!-- for padding -->
-    </div>
-
-    <!-- this is and next div is where box appear whenever link already shortened -->
-    <div class="sm:mt-32 text-left custom-width-lg sm:custom-width-sm mx-auto mt-4" *ngIf="dataCurrentShortenObject.length>0">
-      <p class="font-sans font-semibold text-stone-400">Your Link</p>
-    </div>
-    <div *ngFor="let data of dataCurrentShortenObject.reverse()" class="bg-white rounded-lg shadow-md p-2 lg:p-6 text-left custom-width-lg sm:custom-width-sm mx-auto mt-4">
-      <div class="sm:grid lg:grid-cols-7 md:grid-cols-7 lg:gap-x-4">
-        <div class="lg:col-span-2 md:col-span-2">
-          <p class="font-sans font-bold text-sm sm:text-lg mt-2 w-full">{{data.original_link}}</p>
-          <hr class="border-b-1 border-gray-300 my-2 block md:hidden">
-        </div>
-
-        <div class="col-span-2 sm:hidden lg:block md:block">
-          <!-- for padding -->
-        </div>
-
-        <div class="sm:col-span-1 md:col-span-2 lg:col-span-2">
-          <p class="font-sans text-lg text-teal-400 mt-2 w-full {{ data.short_link.length > 40 ? 'text-2xl' : 'text-lg' }} mb-4 sm:mb-0">{{data.short_link}}</p>
-        </div>
-
-        <div class="col-span-1">
-          <!-- Button -->
-          <button class="bg-teal-400 hover:bg-teal-600 active:bg-teal-800 text-white font-bold p-2 sm:p-3 rounded-lg w-full" (click)="copyShortenLink(data)">
-            <p class="font-sans text-sm">{{ data.isCopied ? 'Copied!' : 'Copy!' }}</p>
-          </button>
-        </div>
-      </div>
-    </div>
+  <app-section-two [dataCurrentShortenObject]="dataCurrentShortenObject" ></app-section-two>
 
 
-    <!-- this is content of section 2  -->
-    <div class="pt-6">
-      <div class="mx-auto mt-36 max-w-2xl sm:px-10 lg:grid lg:max-w-7xl lg:grid-cols-1 lg:gap-x-12 lg:px-8">
-        <div class="aspect-h-4 aspect-w-3 rounded-lg lg:block sm:block">
-          <div class="text-center">
-            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl font-sans">Advanced Statistics</h2>
-            <p class="mt-6 sm:mx-4 md:mx-32 lg:mx-64 text-2xl leading-8 text-gray-600">Track how your links are performing across the web with our advanced statistics dashboard</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- this is section boost -->
+  <app-section-boost></app-section-boost>
 
 
-  <!-- this is section3 -->
-  <div id="section-3" class="bg-boost-mobile sm:bg-boost-desktop bg-purple-800 justify-center items-center">
 
-    <div class="pt-6 pb-12">
-      <div class="mx-auto mt-12 max-w-2xl sm:px-10 lg:grid lg:max-w-7xl lg:grid-cols-1 lg:gap-x-12 lg:px-8">
-        <div class="aspect-h-4 aspect-w-3 rounded-lg lg:block sm:block">
-          <div class="text-center">
-            <h2 class="text-3xl font-semibold tracking-tight text-white sm:text-4xl font-montserrat">Boost your links today</h2>
-            <button class="bg-teal-400 hover:bg-teal-600 active:bg-teal-800 text-white font-bold py-5 px-12 rounded-full mt-4">
-              <p class="font-sans text-xl">Get Started</p>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <footer class="bg-neutral-800 text-white py-8">
-    <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-      <!-- Column 1 - Logo -->
-      <div class="md:col-span-1 text-center">
-        <p class="font-bold text-2xl">Shortly</p>
-      </div>
-
-      <!-- Column 2 - Features, Resources, Company -->
-      <div class="col-span-1 grid grid-cols-1 md:grid-cols-3 md:gap-4 mt-8 md:mt-0">
-        <!-- Features -->
-        <div class="col-span-1 grid-cols-1 text-center md:text-left">
-          <p class="font-bold mb-2">Features</p>
-          <ul>
-            <li class="mb-2"><p class="text-gray-300 text-sm font-sans">Link Shortening</p></li>
-            <li class="mb-2"><p class="text-gray-300 text-sm font-sans">Branded Links</p></li>
-            <li class="mb-2"><p class="text-gray-300 text-sm font-sans">Analytics</p></li>
-          </ul>
-        </div>
-
-        <!-- Resources -->
-        <div class="col-span-1 grid-cols-1 text-center md:text-left mt-8 md:mt-0">
-          <p class="font-bold mb-2">Resources</p>
-          <ul>
-            <li class="mb-2"><p class="text-gray-300 text-sm font-sans">Blog</p></li>
-            <li class="mb-2"><p class="text-gray-300 text-sm font-sans">Developers</p></li>
-            <li class="mb-2"><p class="text-gray-300 text-sm font-sans">Supports</p></li>
-          </ul>
-        </div>
-
-        <!-- Company -->
-        <div class="col-span-1 grid-cols-1 text-center md:text-left mt-8 md:mt-0">
-          <p class="font-bold mb-2">Company</p>
-          <ul>
-            <li class="mb-2"><p class="text-gray-300 text-sm font-sans">About</p></li>
-            <li class="mb-2"><p class="text-gray-300 text-sm font-sans">Our Team</p></li>
-            <li class="mb-2"><p class="text-gray-300 text-sm font-sans">Careers</p></li>
-            <li class="mb-2"><p class="text-gray-300 text-sm font-sans">Link Contact</p></li>
-            <li class="mb-2"><p class="text-gray-300 text-sm font-sans">Branded Links</p></li>
-            <li class="mb-2"><p class="text-gray-300 text-sm font-sans">Analytics</p></li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Column 3 - Icons -->
-      <div class="md:col-span-1 flex justify-center mt-8 md:mt-0">
-        <a href="https://instagram.com">
-          <img src="assets/images/icon-instagram.svg" alt="Instagram Icon" class="w-6 h-6 mx-2">
-        </a>
-
-        <a href="https://pinterest.com">
-          <img src="assets/images/icon-pinterest.svg" alt="Pinterest Icon" class="w-6 h-6 mx-2">
-        </a>
-
-        <a href="https://twitter.com">
-          <img src="assets/images/icon-twitter.svg" alt="Twitter Icon" class="w-6 h-6 mx-2">
-        </a>
-
-        <a href="https://facebook.com">
-          <img src="assets/images/icon-facebook.svg" alt="Facebook Icon" class="w-6 h-6 mx-2">
-        </a>
-        <!-- Repeat for icons 2-4 -->
-      </div>
-    </div>
-
-  </footer>
-
-
+  <!-- this is footer -->
+  <app-footer></app-footer>
 
 
 
 
 </div>
 
+<!-- modal for loading -->
 <app-modal-loading [isLoading]="loading_full">
 </app-modal-loading>
+
+<!-- modal for dialog when success shorten -->
 <app-modal-dialog-success-shorten [shortenLink]="newShortenLink" [isSuccesShorten]="isSuccesShorten">
 </app-modal-dialog-success-shorten>

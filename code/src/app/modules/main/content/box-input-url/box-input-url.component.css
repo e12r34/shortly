@@ -1,0 +1,9 @@
+.custom-width-lg {
+  width: 75vw; /* 75% of the viewport width */
+  left: 50%;
+}
+
+.custom-width-sm {
+  width: 90vw; /* 75% of the viewport width */
+  left: 20%;
+}

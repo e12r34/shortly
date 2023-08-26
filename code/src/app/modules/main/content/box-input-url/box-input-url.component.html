@@ -1,0 +1,20 @@
+<div class="relative">
+  <div class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
+    <div id="box-shorten" class="bg-shorten-mobile sm:bg-shorten-desktop bg-purple-800 rounded-lg shadow-md p-12 text-center custom-width-lg sm:custom-width-sm">
+
+      <!-- Grid layout for large screens -->
+      <div class="sm:grid lg:grid-cols-4 lg:gap-x-4">
+        <div class="lg:col-span-3">
+          <!-- Input field takes 75% of grid -->
+          <input type="text" class="p-5 border rounded-lg w-full hover:border-blue-500 focus:border-blue-500 active:border-blue-500" placeholder="Enter your link here" [(ngModel)]="inputUrl" >
+        </div>
+        <div class="lg:col-span-1">
+          <!-- Button -->
+          <button class="bg-teal-400 hover:bg-teal-600 active:bg-teal-800 text-white font-bold p-5 rounded-lg w-full" (click)="doShortenLink()">
+            <p class="font-sans text-xl">Shorten it!</p>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
